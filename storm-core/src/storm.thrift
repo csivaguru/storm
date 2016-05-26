@@ -697,19 +697,6 @@ enum HBServerMessageType {
   NOT_AUTHORIZED
 }
 
-struct HBPulse {
-  1: required string id;
-  2: binary details;
-}
-
-struct HBRecords {
-  1: list<HBPulse> pulses;
-}
-
-struct HBNodes {
-  1: list<string> pulseIds;
-}
-
 union HBMessageData {
   1: string path,
   2: HBPulse pulse,
@@ -725,10 +712,24 @@ struct HBMessage {
   3: optional i32 message_id = -1,
 }
 
+
 exception HBAuthorizationException {
   1: required string msg;
 }
 
 exception HBExecutionException {
   1: required string msg;
+}
+
+struct HBPulse {
+  1: required string id;
+  2: binary details;
+}
+
+struct HBRecords {
+  1: list<HBPulse> pulses;
+}
+
+struct HBNodes {
+  1: list<string> pulseIds;
 }
