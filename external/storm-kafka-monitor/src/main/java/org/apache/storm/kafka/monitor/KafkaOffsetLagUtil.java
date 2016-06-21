@@ -201,7 +201,9 @@ public class KafkaOffsetLagUtil {
             for (TopicPartition topicPartition : topicPartitionList) {
                 OffsetAndMetadata offsetAndMetadata = consumer.committed(topicPartition);
                 long committedOffset = offsetAndMetadata != null ? offsetAndMetadata.offset() : -1;
-                consumer.seekToEnd(topicPartition);
+                List<TopicPartition> tmpTopicPartitionList = new ArrayList<TopicPartition>();
+                tmpTopicPartitionList.add(topicPartition);
+                consumer.seekToEnd(tmpTopicPartitionList);
                 result.add(new KafkaOffsetLagResult(topicPartition.topic(), topicPartition.partition(), committedOffset, consumer.position(topicPartition)));
             }
         } finally {
